@@ -1,0 +1,430 @@
+[
+    {
+        "id": "eaecbf1d.54a3f",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e4504005.ab692",
+        "type": "comment",
+        "z": "eaecbf1d.54a3f",
+        "name": "Logo & background image",
+        "info": "",
+        "x": 210,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "bd6bbb67.f11a78",
+        "type": "comment",
+        "z": "eaecbf1d.54a3f",
+        "name": "button section",
+        "info": "",
+        "x": 170,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "6d690a20.f620c4",
+        "type": "http request",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://10.3.20.1:50743/phonebook/v1.0/contacts/{{payload}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 590,
+        "y": 360,
+        "wires": [
+            [
+                "d1f72263.82c97"
+            ]
+        ]
+    },
+    {
+        "id": "5cb2c7e4.74edb8",
+        "type": "ui_text_input",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "label": "Enter item to search for:",
+        "tooltip": "",
+        "group": "7bbe9305.2bc65c",
+        "order": 4,
+        "width": 7,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "topicType": "str",
+        "x": 230,
+        "y": 360,
+        "wires": [
+            [
+                "6d690a20.f620c4"
+            ]
+        ]
+    },
+    {
+        "id": "aafed736.9f0538",
+        "type": "ui_template",
+        "z": "eaecbf1d.54a3f",
+        "group": "",
+        "name": "",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "\n\n<style>\n.md-toolbar-tools{\n        background-image: url(\"https://github.com/jorismertens/Node-Red_API_Dashboard/blob/master/images/phone.png?raw=true\");\n        background-repeat: no-repeat;margin-left: 10px;\n        margin-left: 5;\n        background-size: 40px 40px;\n        background-position: 100px;\n     \n    }\n    .md-toolbar-tools h1{\n        text-align: right;\n        width: 250px;\n    }\n    \n    \n\n    \n    body {\n        background-image: url(\"https://github.com/jorismertens/Node-Red_API_Dashboard/blob/master/images/wallpaper.jpg?raw=true\");\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "global",
+        "x": 240,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6ff9d533.fb83fc",
+        "type": "ui_template",
+        "z": "eaecbf1d.54a3f",
+        "group": "40194907.157d98",
+        "name": "",
+        "order": 1,
+        "width": 15,
+        "height": 10,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 1260,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7cc4186.8e75ee8",
+        "type": "ui_button",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "group": "7bbe9305.2bc65c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Show all contact",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "topicType": "str",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "640d1c19.0d6c44"
+            ]
+        ]
+    },
+    {
+        "id": "640d1c19.0d6c44",
+        "type": "http request",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://10.3.20.1:50743/phonebook/v1.0/contacts?after=",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 590,
+        "y": 280,
+        "wires": [
+            [
+                "6b71b566.ea545c"
+            ]
+        ]
+    },
+    {
+        "id": "43159798.81dd18",
+        "type": "template",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<table>\n    <tr><th>first name</th><th>last name</th><th>telephone</th></tr>\n    \n    \n    \n    <tr><td>{{payload.message.contact.firstName}}</td><td>{{payload.message.contact.lastName}}</td><td>{{payload.message.contact.telExtension}}</td></tr>\n   \n   \n</table> \n\n\n\n",
+        "output": "str",
+        "x": 980,
+        "y": 360,
+        "wires": [
+            [
+                "6ff9d533.fb83fc"
+            ]
+        ]
+    },
+    {
+        "id": "d1f72263.82c97",
+        "type": "json",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 770,
+        "y": 360,
+        "wires": [
+            [
+                "43159798.81dd18"
+            ]
+        ]
+    },
+    {
+        "id": "a7d75970.35a3c8",
+        "type": "template",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{#payload}}\n<table>\n        <tr><th>first name</th><th>last name</th><th>telephone</th></tr>\n{{#message}}\n{{#contacts}}\n<tr>\n    <td>{{firstName}}</td>\n    <td>{{lastName}}</td>\n    <td>{{telExtension}}</td>\n</tr>\n{{/contacts}}\n{{/message}}\n</table>\n{{/payload}}\n",
+        "output": "str",
+        "x": 980,
+        "y": 280,
+        "wires": [
+            [
+                "6ff9d533.fb83fc"
+            ]
+        ]
+    },
+    {
+        "id": "6b71b566.ea545c",
+        "type": "json",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 770,
+        "y": 280,
+        "wires": [
+            [
+                "a7d75970.35a3c8"
+            ]
+        ]
+    },
+    {
+        "id": "8aea8037.b29a7",
+        "type": "ui_form",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "label": "Add contact",
+        "group": "7bbe9305.2bc65c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "First name",
+                "value": "firstName",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Last name",
+                "value": "lastName",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Telephone nr",
+                "value": "telExtension",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "firstName": "",
+            "lastName": "",
+            "telExtension": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "payload",
+        "topicType": "msg",
+        "splitLayout": "",
+        "x": 190,
+        "y": 440,
+        "wires": [
+            [
+                "3074334.994afcc"
+            ]
+        ]
+    },
+    {
+        "id": "95e7ac57.f55e7",
+        "type": "http request",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://10.3.20.1:50743/phonebook/v1.0/contacts",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 590,
+        "y": 440,
+        "wires": [
+            [
+                "6ff9d533.fb83fc"
+            ]
+        ]
+    },
+    {
+        "id": "3074334.994afcc",
+        "type": "template",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"message\": {\n        \"contact\": {\n            \"lastName\": \"{{payload.lastName}}\",\n            \"firstName\": \"{{payload.firstName}}\",\n            \"telExtension\": \"{{payload.telExtension}}\",\n            \"zipCode\": \"1111\"\n        }\n    }\n}",
+        "output": "json",
+        "x": 400,
+        "y": 440,
+        "wires": [
+            [
+                "95e7ac57.f55e7"
+            ]
+        ]
+    },
+    {
+        "id": "9d1c212.c5abbe",
+        "type": "http request",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "method": "DELETE",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://10.3.20.1:50743/phonebook/v1.0/contacts/{{contact}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 590,
+        "y": 520,
+        "wires": [
+            [
+                "6ff9d533.fb83fc"
+            ]
+        ]
+    },
+    {
+        "id": "c8752026.9459a",
+        "type": "ui_text_input",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "label": "Delete contact",
+        "tooltip": "",
+        "group": "7bbe9305.2bc65c",
+        "order": 6,
+        "width": 7,
+        "height": 1,
+        "passthru": false,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "topicType": "str",
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "7d3e90b5.07ee1"
+            ]
+        ]
+    },
+    {
+        "id": "7d3e90b5.07ee1",
+        "type": "change",
+        "z": "eaecbf1d.54a3f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "contact",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 520,
+        "wires": [
+            [
+                "9d1c212.c5abbe"
+            ]
+        ]
+    },
+    {
+        "id": "7bbe9305.2bc65c",
+        "type": "ui_group",
+        "name": "search area",
+        "tab": "c28c16de.68b0e8",
+        "order": 1,
+        "disp": false,
+        "width": 7,
+        "collapse": false
+    },
+    {
+        "id": "40194907.157d98",
+        "type": "ui_group",
+        "name": "chart area",
+        "tab": "c28c16de.68b0e8",
+        "order": 2,
+        "disp": false,
+        "width": 15,
+        "collapse": false
+    },
+    {
+        "id": "c28c16de.68b0e8",
+        "type": "ui_tab",
+        "name": "Telephonebook",
+        "icon": "",
+        "disabled": false,
+        "hidden": false,
+        "info": "<style>\n    \n        background-image: url(\"https://seeklogo.com/images/P/partly-sunny-weather-symbo-logo-FE1CF4CAE5-seeklogo.com.gif\");\n        background-repeat: no-repeat;margin-left: 60px;\n        margin-left: 0;\n        background-size: 125px 39px;\n        background-position: 50px;\n        \n</style>"
+    }
+]
